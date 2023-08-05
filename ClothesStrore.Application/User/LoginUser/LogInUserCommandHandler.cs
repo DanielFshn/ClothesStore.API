@@ -32,7 +32,7 @@ namespace ClothesStrore.Application.User.LoginUser
                 var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var token = _jwtTokenGenerator.GenerateToken(user);
+                    var token = await _jwtTokenGenerator.GenerateToken(user);
                     return new LoginUserResponse { IsSuccesful = true, Token = token };
                 }
             }

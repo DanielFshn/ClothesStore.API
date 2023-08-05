@@ -29,10 +29,11 @@ namespace ClothesStore.API.Controllers
             else
                 return BadRequest();
         }
+        //[Authorize(Roles = "Admin")]
         [HttpGet("getAllUsers")]
         public async Task<ActionResult> GetAllUsers()
         {
-            var response = await _mediator.Send(new GetAllUsersRequest());
+            var response = await _mediator.Send(new GetAllUsersRequest(),HttpContext.RequestAborted);
             return Ok(response);
         }
         [HttpPost("login")]

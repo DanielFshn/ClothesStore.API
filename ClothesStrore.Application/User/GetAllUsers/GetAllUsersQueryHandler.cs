@@ -20,7 +20,7 @@ namespace ClothesStrore.Application.User.GetAllUsers
 
         public Task<List<GetAllUsersResponse>> Handle(GetAllUsersRequest request, CancellationToken cancellationToken)
         {
-            return _userManager.Users.ProjectTo<GetAllUsersResponse>(_mapper.ConfigurationProvider).ToListAsync();
+            return _userManager.Users.ProjectTo<GetAllUsersResponse>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
         }
     }
 }

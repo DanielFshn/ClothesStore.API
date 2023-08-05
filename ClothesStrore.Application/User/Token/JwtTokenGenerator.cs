@@ -23,7 +23,7 @@ namespace ClothesStrore.Application.User.Token
             _userManager = userManager;
         }
 
-        public string GenerateToken(IdentityUser user)
+        public async Task<string> GenerateToken(IdentityUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
@@ -41,6 +41,12 @@ namespace ClothesStrore.Application.User.Token
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256),
 
             };
+            var roles =  await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, role.ToString()));
+
+            }
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }

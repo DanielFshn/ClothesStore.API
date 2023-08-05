@@ -1,3 +1,4 @@
+using ClothesStore.API.Middlewares;
 using ClothesStore.Infrastructure;
 using ClothesStore.Infrastructure.DatabaseContext;
 using ClothesStrore.Application;
@@ -9,6 +10,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+//Add logger
+builder.Services.AddLogging(builder =>
+{
+    builder.AddConsole();
+    builder.AddDebug();
+});
+//builder.Services.AddLogging();
+//Configure Global Handeling
+builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -16,9 +27,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigurationInfrastructure(builder.Configuration);
 builder.Services.ConfigurationApplication(builder.Configuration);
-builder.Services.AddIdentity<Microsoft.AspNetCore.Identity.IdentityUser, Microsoft.AspNetCore.Identity.IdentityRole>()
-    .AddEntityFrameworkStores<ClothesStoreDbContext>()
-    .AddDefaultTokenProviders();
+
 
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 //builder.Services.AddControllers().AddNewtonsoftJson();
@@ -36,6 +45,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.MapControllers();
 

@@ -9,6 +9,6 @@ namespace ClothesStrore.Application.User.Token
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(IdentityUser user);
+        Task<string> GenerateToken(IdentityUser user);
     }
 }

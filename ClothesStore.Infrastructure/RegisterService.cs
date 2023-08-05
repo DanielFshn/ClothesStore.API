@@ -16,11 +16,22 @@ namespace ClothesStore.Infrastructure
 {
     public static class RegisterService
     {
-        public static void ConfigurationInfrastructure(this IServiceCollection services , IConfiguration configuration)
+        public static void ConfigurationInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
 
-
+            services.AddIdentity<Microsoft.AspNetCore.Identity.IdentityUser, Microsoft.AspNetCore.Identity.IdentityRole>()
+                .AddEntityFrameworkStores<ClothesStoreDbContext>()
+                .AddDefaultTokenProviders();
             var key = Encoding.ASCII.GetBytes(configuration["JWT:Key"]);
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("UserPolicy", policy =>
+                {
+                    policy.RequireRole("User");
+                });
+            });
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
