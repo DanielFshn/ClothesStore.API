@@ -1,15 +1,18 @@
 ﻿using ClothesStore.Domain.Common;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClothesStore.Domain.Entities
 {
-    public class ShippingAdress : BaseEntity
+    public class ShippingAdress
     {
-        public Guid UserId { get; set; }
+        [Key]
+        public string Id { get; set; }
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         public IdentityUser User { get; set; }
-        public Guid AdressDetailsId { get; set; }
+        public string AdressDetailsId { get; set; }
         [ForeignKey("AdressDetailsId")]
         public AdressDetail AdressDetail { get; set; }
     }

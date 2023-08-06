@@ -10,13 +10,13 @@ namespace ClothesStore.Domain.Entities
         public decimal Price { get; set; }
         public string ImageUrl{ get; set; }
         public bool IsRelease { get; set; }
-        public Guid CategoryId{ get; set; }
+        public string CategoryId{ get; set; }
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
-        public Guid GenderId { get; set; }
+        public string GenderId { get; set; }
         [ForeignKey("GenderId")]
         public Gender Gender { get; set; }
-        public Guid SizeId { get; set; }
+        public string SizeId { get; set; }
         [ForeignKey("SizeId")]
         public Size Size { get; set; }
     }

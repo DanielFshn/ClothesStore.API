@@ -1,11 +1,13 @@
 ﻿using ClothesStore.Domain.Common;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClothesStore.Domain.Entities
 {
     public class Order : BaseEntity
     {
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
         public IdentityUser User { get; set; }
         public decimal TotalAmount { get; set; }
     }

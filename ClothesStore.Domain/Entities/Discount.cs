@@ -6,7 +6,7 @@ namespace ClothesStore.Domain.Entities
 {
     public class Discount : BaseEntity
     {
-        public Guid ProductId { get; set; }
+        public string ProductId { get; set; }
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
         public int DiscountAmount { get; set; }
