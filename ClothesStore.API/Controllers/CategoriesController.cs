@@ -1,4 +1,6 @@
-﻿using ClothesStrore.Application.Categoty.GetCategories;
+﻿using ClothesStore.API.Common;
+using ClothesStrore.Application.Categoty.DeleteCategory;
+using ClothesStrore.Application.Categoty.GetCategories;
 using ClothesStrore.Application.Categoty.InsertCategories;
 using ClothesStrore.Application.Categoty.UpdateCategory;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +40,11 @@ namespace ClothesStore.API.Controllers
 
             return Ok("Category updated successfully.");
         }
-
+        [HttpPut("delete")]
+        public async Task<ActionResult> DeleteCategory([FromBody] DeleteCategoryRequest request)
+        {
+            await Mediator.Send(request);
+            return Ok(Message.ResponseMessage = "Category deleted succesfull");
+        }
     }
 }

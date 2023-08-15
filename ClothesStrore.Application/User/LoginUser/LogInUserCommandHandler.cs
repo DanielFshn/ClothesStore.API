@@ -1,12 +1,4 @@
 ﻿using ClothesStrore.Application.User.Token;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClothesStrore.Application.User.LoginUser
 {

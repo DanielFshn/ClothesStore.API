@@ -22,8 +22,6 @@ namespace ClothesStrore.Application.Categoty.UpdateCategory
             _mapper.Map(request, existingCategory);
             await _context.SaveToDbAsync();
             return "{\"Message\":\"Category is updated succesfully\"}";
-
-
         }
     }
 }

@@ -1,12 +1,6 @@
-﻿using AutoMapper;
-using ClothesStrore.Application.Common.Exceptions;
+﻿using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using System.Text.Json.Serialization;
 
 namespace ClothesStrore.Application.User.CreaeteUser
 {
@@ -48,12 +42,12 @@ namespace ClothesStrore.Application.User.CreaeteUser
                 else
                 {
                     var errors = string.Join(", ", result.Errors.Select(error => error.Description));
-                    throw new InternalServerError($"Deshtoi krijimi i userit! - Error {errors}");
+                    throw new InternalServerError($"Failed to create user! - Error {errors}");
                 }
             }
             else
             {
-                throw new ConflictException("Ekziston nje user me kete email!");
+                throw new ConflictException("A user with this email already exist!");
             }
         }
     }

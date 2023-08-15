@@ -1,9 +1,7 @@
 using ClothesStore.API.Middlewares;
 using ClothesStore.Infrastructure;
-using ClothesStore.Infrastructure.DatabaseContext;
 using ClothesStrore.Application;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using ClothesStrore.Application.Behaviors;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +14,10 @@ builder.Services.AddLogging(builder =>
     builder.AddConsole();
     builder.AddDebug();
 });
+
+builder.Services.ConfigurationApplication(builder.Configuration);
+builder.Services.ConfigurationInfrastructure(builder.Configuration);
+
 //builder.Services.AddLogging();
 //Configure Global Handeling
 builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
@@ -25,8 +27,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.ConfigurationInfrastructure(builder.Configuration);
-builder.Services.ConfigurationApplication(builder.Configuration);
+
 
 
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

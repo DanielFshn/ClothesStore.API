@@ -1,15 +1,6 @@
-﻿using AutoMapper.QueryableExtensions;
-using ClothesStrore.Application.Context;
-using ClothesStrore.Application.User.GetAllUsers;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using ClothesStrore.Application.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ClothesStrore.Application.Categoty.GetCategories
 {

@@ -3,9 +3,7 @@ using ClothesStrore.Application.User.GetAllUsers;
 using ClothesStrore.Application.User.LoginUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ClothesStore.API.Controllers
 {
