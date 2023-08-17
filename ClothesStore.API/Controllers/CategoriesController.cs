@@ -21,9 +21,11 @@ namespace ClothesStore.API.Controllers
         [HttpPost("insert")]
         public async Task<ActionResult> InsertCategory([FromBody] CreateCategoryRequest payload)
         {
-            var response = await Mediator.Send(payload);
-            if (response != null)
-                return Ok(response);
+            var result = await Mediator.Send(payload);
+            var jsonObject = Deserialize.JsonDeserialize(result);
+            jsonObject.TryGetValue("Message", out var message);
+            if (message != null)
+                return Ok(message);
             else
                 return BadRequest();
         }
@@ -36,14 +38,15 @@ namespace ClothesStore.API.Controllers
                 UpdateData = request
             };
 
-            await Mediator.Send(updateCommand);
-
-            return Ok("Category updated successfully.");
+            var result =  await Mediator.Send(updateCommand);
+            
+            return Ok(Deserialize.JsonDeserialize(result));
         }
         [HttpPut("delete")]
         public async Task<ActionResult> DeleteCategory([FromBody] DeleteCategoryRequest request)
         {
-            return Ok(await Mediator.Send(request));
+            var result = await Mediator.Send(request);
+            return Ok(Deserialize.JsonDeserialize(result));
         }
     }
 }

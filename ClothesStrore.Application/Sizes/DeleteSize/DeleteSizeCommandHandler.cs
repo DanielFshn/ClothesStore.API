@@ -1,5 +1,6 @@
 ﻿using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,8 @@ namespace ClothesStrore.Application.Sizes.DeleteSize
                 throw new NotFoundException("Size not found.");
             _mapper.Map(request, gender);
             await _context.SaveToDbAsync();
-            return "{\"Message\":\"Size is deleted succesfully\"}";
+            return JsonConvert.SerializeObject(new { Message = "Size is deleted succesfully" });
+
         }
     }
 }

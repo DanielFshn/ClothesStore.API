@@ -1,5 +1,6 @@
 ﻿using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
+using Newtonsoft.Json;
 
 namespace ClothesStrore.Application.Genders.UpdateGender
 {
@@ -21,7 +22,7 @@ namespace ClothesStrore.Application.Genders.UpdateGender
                 throw new NotFoundException("Gender not found.");
             _mapper.Map(request, existingGender);
             await _context.SaveToDbAsync();
-            return "{\"Message\":\"Gender is updated succesfully\"}";
+            return JsonConvert.SerializeObject(new { Message = "Gender is updated succesfully" });
         }
     }
 }

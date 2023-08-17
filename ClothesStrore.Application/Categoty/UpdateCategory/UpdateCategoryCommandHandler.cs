@@ -1,7 +1,6 @@
 ﻿using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
 
-
 namespace ClothesStrore.Application.Categoty.UpdateCategory
 {
     public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, string>
@@ -21,7 +20,7 @@ namespace ClothesStrore.Application.Categoty.UpdateCategory
                 throw new NotFoundException("Category not found.");
             _mapper.Map(request, existingCategory);
             await _context.SaveToDbAsync();
-            return "{\"Message\":\"Category is updated succesfully\"}";
+            return JsonConvert.SerializeObject(new { Message = "Category is updated succesfully" });
         }
     }
 }

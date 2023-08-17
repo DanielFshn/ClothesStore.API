@@ -1,7 +1,6 @@
 ﻿using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
 
-
 namespace ClothesStrore.Application.Categoty.DeleteCategory
 {
     public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryRequest, string>
@@ -22,7 +21,8 @@ namespace ClothesStrore.Application.Categoty.DeleteCategory
                 throw new NotFoundException("Category not found.");
             _mapper.Map(request, category);
             await _context.SaveToDbAsync();
-            return "{\"Message\":\"Category is deleted succesfully\"}";
+            return JsonConvert.SerializeObject(new { Message = "Category is deleted succesfully" });
+
         }
     }
 }

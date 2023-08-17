@@ -1,6 +1,7 @@
 ﻿using ClothesStore.Domain.Entities;
 using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,8 @@ namespace ClothesStrore.Application.Genders.DeleteGender
                 throw new NotFoundException("Category not found.");
             _mapper.Map(request, gender);
             await _context.SaveToDbAsync();
-            return "{\"Message\":\"Gender is deleted succesfully\"}";
+            return JsonConvert.SerializeObject(new { Message = "Gender is deleted succesfully" });
+
         }
     }
 }

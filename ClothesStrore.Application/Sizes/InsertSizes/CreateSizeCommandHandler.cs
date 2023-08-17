@@ -2,6 +2,7 @@
 using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace ClothesStrore.Application.Sizes.InsertSizes
 {
@@ -25,7 +26,8 @@ namespace ClothesStrore.Application.Sizes.InsertSizes
             size.CreatedOn = DateTime.Now;
             _context.Sizes.Add(size);
             await _context.SaveToDbAsync();
-            return "{\"Message\":\"Size is added succesfully\"}";
+            return JsonConvert.SerializeObject(new { Message = "Size is added succesfully" });
+
         }
     }
 }

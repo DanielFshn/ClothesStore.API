@@ -24,7 +24,8 @@ namespace ClothesStrore.Application.Categoty.InsertCategories
             var category = _mapper.Map<Category>(request);
             _context.Categories.Add(category);
             await _context.SaveToDbAsync();
-            return "{\"Message\":\"Category is added succesfully\"}";
+            return JsonConvert.SerializeObject(new { Message = "Category is added succesfully" });
+
         }
     }
 }

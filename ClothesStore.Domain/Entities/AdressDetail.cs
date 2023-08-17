@@ -1,5 +1,4 @@
-﻿using ClothesStore.Domain.Common;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ClothesStore.Domain.Entities
 {

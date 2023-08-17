@@ -1,7 +1,7 @@
 ﻿using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
 using Microsoft.EntityFrameworkCore;
-
+using Newtonsoft.Json;
 
 namespace ClothesStrore.Application.Gender.InsertGender
 {
@@ -26,7 +26,7 @@ namespace ClothesStrore.Application.Gender.InsertGender
             gender.CreatedOn = DateTime.Now;
             _context.Genders.Add(gender);
             await _context.SaveToDbAsync();
-            return "{\"Message\":\"Gender is added succesfully\"}";
+            return JsonConvert.SerializeObject(new { Message = "Gender is added succesfully" });
 
         }
     }

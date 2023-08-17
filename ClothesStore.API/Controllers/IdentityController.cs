@@ -1,4 +1,6 @@
-﻿using ClothesStrore.Application.User.CreaeteUser;
+﻿using ClothesStore.API.Common;
+using ClothesStrore.Application.User.ChangePassword;
+using ClothesStrore.Application.User.CreaeteUser;
 using ClothesStrore.Application.User.GetAllUsers;
 using ClothesStrore.Application.User.LoginUser;
 using MediatR;
@@ -31,7 +33,7 @@ namespace ClothesStore.API.Controllers
         [HttpGet("getAllUsers")]
         public async Task<ActionResult> GetAllUsers()
         {
-            var response = await _mediator.Send(new GetAllUsersRequest(),HttpContext.RequestAborted);
+            var response = await _mediator.Send(new GetAllUsersRequest(), HttpContext.RequestAborted);
             return Ok(response);
         }
         [HttpPost("login")]
@@ -39,6 +41,25 @@ namespace ClothesStore.API.Controllers
         {
             var response = await _mediator.Send(paylaod);
             return Ok(response);
+        }
+        [HttpPost("change-password")]
+        public async Task<ActionResult> ChangePassword(string id, [FromBody] ChangePasswordRequest model)
+        {
+            var command = new ChangePasswordRequest
+            {
+                Id = id,
+                CurrentPassword = model.CurrentPassword,
+                NewPassword = model.NewPassword,
+                RepeatPassword = model.RepeatPassword
+            };
+            var result = await _mediator.Send(command);
+            var jsonObject = Deserialize.JsonDeserialize(result);
+            jsonObject.TryGetValue("Message", out string messageValue);
+
+            if (bool.Parse(messageValue))
+                return Ok(jsonObject);
+            else
+                return BadRequest(jsonObject);
         }
     }
 }

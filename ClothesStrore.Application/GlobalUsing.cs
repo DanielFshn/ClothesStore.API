@@ -2,3 +2,4 @@
 global using MediatR;
 global using AutoMapper;
 global using Microsoft.AspNetCore.Identity;
+global using Newtonsoft.Json;

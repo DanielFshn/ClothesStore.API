@@ -1,5 +1,6 @@
 ﻿using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
+using Newtonsoft.Json;
 
 namespace ClothesStrore.Application.Sizes.UpdateSize
 {
@@ -19,7 +20,8 @@ namespace ClothesStrore.Application.Sizes.UpdateSize
                 throw new NotFoundException("Size not found.");
             _mapper.Map(request, existingSize);
             await _context.SaveToDbAsync();
-            return "{\"Message\":\"Size is updated succesfully\"}";
+            return JsonConvert.SerializeObject(new { Message = "Size is updated succesfully" });
+
         }
     }
 }
