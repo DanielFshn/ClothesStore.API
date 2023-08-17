@@ -1,15 +1,13 @@
-﻿using ClothesStrore.Application.Categoty.UpdateCategory;
-using FluentValidation;
-
+﻿using FluentValidation;
 
 namespace ClothesStrore.Application.Genders.UpdateGender
 {
-    public class UpdateGenderValidator : AbstractValidator<UpdateCategoryCommand>
+    public class UpdateGenderValidator : AbstractValidator<UpdateGenderCommand>
     {
         public UpdateGenderValidator()
         {
-            RuleFor(x => x.UpdateData).NotEmpty();
-            RuleFor(x => x.UpdateData.Name).NotEmpty();
+            RuleFor(x => x.UpdateRequest).NotEmpty();
+            RuleFor(x => x.UpdateRequest.Name).NotEmpty();
 
         }
     }

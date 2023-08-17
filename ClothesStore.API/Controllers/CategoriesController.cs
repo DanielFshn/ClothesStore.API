@@ -27,7 +27,7 @@ namespace ClothesStore.API.Controllers
             else
                 return BadRequest();
         }
-        [HttpPut("update")]
+        [HttpPut("update/{id}")]
         public async Task<ActionResult> UpdateProduct(string id, [FromBody] UpdateCategoryRequest request)
         {
             var updateCommand = new UpdateCategoryCommand
@@ -43,8 +43,7 @@ namespace ClothesStore.API.Controllers
         [HttpPut("delete")]
         public async Task<ActionResult> DeleteCategory([FromBody] DeleteCategoryRequest request)
         {
-            await Mediator.Send(request);
-            return Ok(Message.ResponseMessage = "Category deleted succesfull");
+            return Ok(await Mediator.Send(request));
         }
     }
 }
