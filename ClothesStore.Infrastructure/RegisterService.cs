@@ -22,6 +22,9 @@ namespace ClothesStore.Infrastructure
             services.AddIdentity<Microsoft.AspNetCore.Identity.IdentityUser, Microsoft.AspNetCore.Identity.IdentityRole>()
                 .AddEntityFrameworkStores<ClothesStoreDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(10));
+
             var key = Encoding.ASCII.GetBytes(configuration["JWT:Key"]);
 
             services.AddAuthorization(options =>
