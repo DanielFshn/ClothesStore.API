@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace ClothesStrore.Application.User.CreaeteUser
+﻿namespace ClothesStrore.Application.User.CreaeteUser
 {
     public class CreateUserRequest : IRequest<string>
     {

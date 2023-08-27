@@ -14,7 +14,7 @@ namespace ClothesStrore.Application.Context
         public DbSet<ClothesStore.Domain.Entities.Gender> Genders { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<ClothesStore.Domain.Entities.Product> Products { get; set; }
         public DbSet<ProductRating> ProductRatings { get; set; }
         public DbSet<Size> Sizes { get; set; }
     }

@@ -25,7 +25,6 @@ namespace ClothesStrore.Application.Common
                     var errorMessages = failures.Select(failure => failure.ErrorMessage).ToList();
                     var errorMessage = "Error " + string.Join(", ", errorMessages);
                     throw new FluentValidation.ValidationException(errorMessage);
-                       
                 }
             }
             return await next();

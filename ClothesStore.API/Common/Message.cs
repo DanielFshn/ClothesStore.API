@@ -2,6 +2,6 @@
 {
     public class Message
     {
-        public static string? ResponseMessage { get; set; }
+        public string? ResponseMessage { get; set; }
     }
 }
