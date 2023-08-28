@@ -27,6 +27,7 @@ namespace ClothesStrore.Application.Genders.DeleteGender
             if (gender == null)
                 throw new NotFoundException("Category not found.");
             _mapper.Map(request, gender);
+            gender.DeletedOn = DateTime.Now;
             await _context.SaveToDbAsync();
             return JsonConvert.SerializeObject(new { Message = "Gender is deleted succesfully" });
 

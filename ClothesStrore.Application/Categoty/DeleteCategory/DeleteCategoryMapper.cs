@@ -8,7 +8,7 @@ namespace ClothesStrore.Application.Categoty.DeleteCategory
         {
             CreateMap<DeleteCategoryRequest, Category>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CategoryId))
-            .ForMember(dest => dest.DeletedOn, opt => opt.MapFrom(src => src.DeletedOn));
+            .ForMember(dest => dest.DeletedOn, opt => opt.MapFrom(src => DateTime.Now));
         }
     }
 }

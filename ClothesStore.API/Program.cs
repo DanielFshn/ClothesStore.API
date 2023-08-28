@@ -1,7 +1,6 @@
 using ClothesStore.API.Middlewares;
 using ClothesStore.Infrastructure;
 using ClothesStrore.Application;
-using ClothesStrore.Application.Behaviors;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,14 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ClothesStore.API.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ApiControllerBase : ControllerBase
-    {
-        private ISender _mediator = null!;
+namespace ClothesStore.API.Controllers;
 
-        protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
-    }
+[Route("api/[controller]")]
+[ApiController]
+public class ApiControllerBase : ControllerBase
+{
+    private ISender _mediator = null!;
+
+    protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
 }

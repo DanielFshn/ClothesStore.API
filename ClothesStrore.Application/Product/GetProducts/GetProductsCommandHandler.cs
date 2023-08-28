@@ -24,6 +24,7 @@ public class GetProductsCommandHandler : IRequestHandler<GetAllProductsRequest, 
                               join c in _context.Categories on p.CategoryId equals c.Id
                               join s in _context.Sizes on p.SizeId equals s.Id
                               join g in _context.Genders on p.GenderId equals g.Id
+                              where p.IsRelease
                               select new GetAllProductsResponse
                               {
                                   CategoryName = c.CategoryName,

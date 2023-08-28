@@ -20,8 +20,6 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductRequest,
         if (product == null)
             throw new NotFoundException("Product not found.");
         _mapper.Map(request, product);
-        product.DeletedOn = DateTime.Now;
-        product.IsRelease = false;
         await _context.SaveToDbAsync();
         return JsonConvert.SerializeObject(new { Message = "Product is deleted succesfully" });
     }

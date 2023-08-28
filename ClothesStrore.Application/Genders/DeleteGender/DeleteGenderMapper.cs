@@ -1,13 +1,12 @@
 ﻿
-namespace ClothesStrore.Application.Genders.DeleteGender
+namespace ClothesStrore.Application.Genders.DeleteGender;
+
+public class DeleteGenderMapper : Profile
 {
-    public class DeleteGenderMapper : Profile
+    public DeleteGenderMapper()
     {
-        public DeleteGenderMapper()
-        {
-            CreateMap<DeleteGenderRequest, ClothesStore.Domain.Entities.Gender>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.GednerId))
-            .ForMember(dest => dest.DeletedOn, opt => opt.MapFrom(src => src.DeletedOn));
-        }
+        CreateMap<DeleteGenderRequest, ClothesStore.Domain.Entities.Gender>()
+        .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.GednerId))
+        .ForMember(dest => dest.DeletedOn, opt => opt.MapFrom(src => DateTime.Now));
     }
 }

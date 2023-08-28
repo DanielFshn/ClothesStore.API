@@ -8,7 +8,7 @@ namespace ClothesStrore.Application.Categoty.UpdateCategory
         public UpdateCategoryValidator()
         {
             RuleFor(x => x.CategoryId).NotEmpty();
-            RuleFor(x => x.UpdateData).NotEmpty();
+            RuleFor(x => x.UpdateData.Name).NotEmpty();
         }
     }
 }

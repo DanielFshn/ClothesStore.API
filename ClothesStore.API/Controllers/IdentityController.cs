@@ -14,35 +14,29 @@ namespace ClothesStore.API.Controllers;
 
 [Route("api/identity")]
 [ApiController]
-public class IdentityController : ControllerBase
+public class IdentityController : ApiControllerBase
 {
-    public IMediator _mediator { get; }
-
-    public IdentityController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-    [HttpPost("register")]
+    [HttpPost("register-user")]
     [AllowAnonymous]
     public async Task<ActionResult> Register([FromBody] CreateUserRequest payload)
     {
-        var userCreated = await _mediator.Send(payload);
+        var userCreated = await Mediator.Send(payload);
         if (userCreated != null)
             return Ok(userCreated);
         else
             return BadRequest();
     }
     //[Authorize(Roles = "Admin")]
-    [HttpGet("getAllUsers")]
+    [HttpGet("get-all-users")]
     public async Task<ActionResult> GetAllUsers()
     {
-        var response = await _mediator.Send(new GetAllUsersRequest(), HttpContext.RequestAborted);
+        var response = await Mediator.Send(new GetAllUsersRequest(), HttpContext.RequestAborted);
         return Ok(response);
     }
-    [HttpPost("login")]
+    [HttpPost("login-user")]
     public async Task<ActionResult> Login([FromBody] LoginUserRequest paylaod)
     {
-        var response = await _mediator.Send(paylaod);
+        var response = await Mediator.Send(paylaod);
         return Ok(response);
     }
     [HttpPost("change-password")]
@@ -55,7 +49,7 @@ public class IdentityController : ControllerBase
             NewPassword = model.NewPassword,
             RepeatPassword = model.RepeatPassword
         };
-        var result = await _mediator.Send(command);
+        var result = await Mediator.Send(command);
         var jsonObject = Deserialize.JsonDeserialize(result);
         jsonObject.TryGetValue("Message", out string messageValue);
 
@@ -67,13 +61,13 @@ public class IdentityController : ControllerBase
     [HttpPost("forgot-password")]
     public async Task<ActionResult> ForgotPassword([FromBody] EmailSendRequest request)
     {
-        var result = await _mediator.Send(request);
+        var result = await Mediator.Send(request);
         return Ok(result);
     }
     [HttpPost("reset-password")]
     public async Task<ActionResult> ResetPasswordWithToken([FromBody] ResetPasswordRequest payload)
     {
-        var result = await _mediator.Send(payload);
+        var result = await Mediator.Send(payload);
         return Ok(result);
     }
 }
