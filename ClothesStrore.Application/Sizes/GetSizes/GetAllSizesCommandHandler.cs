@@ -15,7 +15,7 @@ namespace ClothesStrore.Application.Sizes.GetSizes
 
         public async Task<List<GetAllSizesResponse>> Handle(GetAllSizesRequest request, CancellationToken cancellationToken)
         {
-            var sizes = await _context.Sizes.ToListAsync();
+            var sizes = await _context.Sizes.Where(x => x.DeletedOn == null).ToListAsync();
             var response = _mapper.Map<List<GetAllSizesResponse>>(sizes);
             return response;
         }

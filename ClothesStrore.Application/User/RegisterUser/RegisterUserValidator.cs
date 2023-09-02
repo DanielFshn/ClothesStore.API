@@ -12,6 +12,9 @@ public class RegisterUserValidator : AbstractValidator<CreateUserRequest>
         RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Phone number is required!");
         RuleFor(model => model.Password)
            .NotEmpty().WithMessage("Password is required!")
+            .Matches("[A-Z]").WithMessage("Password must contain at least one capital letter.")
+            .Matches("[0-9]").WithMessage("Password must contain at least one number.")
+            .Matches("[!@#$%^&*(),.?\":{}|<>]").WithMessage("Password must contain at least one special character.")
            .Equal(model => model.RepeatPassword).WithMessage("Passwords do not match!");
         RuleFor(model => model.RepeatPassword)
             .NotEmpty().WithMessage("Repeat password is required!");

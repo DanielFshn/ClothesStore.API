@@ -1,6 +1,4 @@
-﻿using ClothesStore.Domain.Entities;
-using ClothesStrore.Application.Context;
-using ClothesStrore.Application.Gender.GetGenders;
+﻿using ClothesStrore.Application.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClothesStrore.Application.Product.GetProducts;
@@ -36,18 +34,6 @@ public class GetProductsCommandHandler : IRequestHandler<GetAllProductsRequest, 
                                   SizeName = s.Name
                               }).ToListAsync();
         
-        //var products = await _context.Products.ToListAsync(cancellationToken);
-        //var response = _mapper.Map<List<GetAllProductsResponse>>(products);
-        //response = await (from p in _context.Products
-        //                  join c in _context.Categories on p.CategoryId equals c.Id
-        //                  join s in _context.Sizes on p.SizeId equals s.Id
-        //                  join g in _context.Genders on p.GenderId equals g.Id
-        //                  select new GetAllProductsResponse
-        //                  {
-        //                      SizeName = s.Name,
-        //                      GenderName = g.GenderName,
-        //                      CategoryName = c.CategoryName,
-        //                  }).ToListAsync();
         return response;
     }
 }

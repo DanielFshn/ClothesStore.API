@@ -17,7 +17,7 @@ namespace ClothesStrore.Application.Genders.GetGenders
 
         public async Task<List<GetAllGenderResponse>> Handle(GetAllGendersRequest request, CancellationToken cancellationToken)
         {
-            var genders = await _context.Genders.ToListAsync(cancellationToken);
+            var genders = await _context.Genders.Where(x => x.DeletedOn == null).ToListAsync(cancellationToken);
             var response = _mapper.Map<List<GetAllGenderResponse>>(genders);
             return response;
         }

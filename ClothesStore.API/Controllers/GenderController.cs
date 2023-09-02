@@ -3,11 +3,14 @@ using ClothesStrore.Application.Gender.GetGenders;
 using ClothesStrore.Application.Gender.InsertGender;
 using ClothesStrore.Application.Genders.DeleteGender;
 using ClothesStrore.Application.Genders.UpdateGender;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 namespace ClothesStore.API.Controllers;
 
 [Route("api/gender")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class GenderController : ApiControllerBase
 {
     [HttpGet("get-genders")]

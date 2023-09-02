@@ -3,15 +3,16 @@ using ClothesStrore.Application.Categoty.DeleteCategory;
 using ClothesStrore.Application.Categoty.GetCategories;
 using ClothesStrore.Application.Categoty.InsertCategories;
 using ClothesStrore.Application.Categoty.UpdateCategory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClothesStore.API.Controllers;
 
 [Route("api/categories")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class CategoriesController : ApiControllerBase
 {
-
     [HttpGet("get-categories")]
     public async Task<ActionResult> GetAllCategories()
     {
@@ -38,8 +39,8 @@ public class CategoriesController : ApiControllerBase
             UpdateData = request
         };
 
-        var result =  await Mediator.Send(updateCommand);
-        
+        var result = await Mediator.Send(updateCommand);
+
         return Ok(Deserialize.JsonDeserialize(result));
     }
     [HttpPut("delete-category")]

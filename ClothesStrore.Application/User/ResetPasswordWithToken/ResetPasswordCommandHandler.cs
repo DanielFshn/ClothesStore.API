@@ -1,5 +1,4 @@
 ﻿using ClothesStrore.Application.Common.Exceptions;
-using Microsoft.AspNetCore.Identity;
 
 namespace ClothesStrore.Application.User.ResetPasswordWithToken;
 
