@@ -20,6 +20,7 @@ public static class RegisterService
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
         services.AddScoped<IEmailService, EmailService>();
+        services.AddHttpContextAccessor();
     }
 
 }

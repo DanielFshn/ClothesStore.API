@@ -7,8 +7,8 @@ public class RegisterUserValidator : AbstractValidator<CreateUserRequest>
 {
     public RegisterUserValidator()
     {
-        RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required!"); ;
-        RuleFor(x => x.UserName).NotEmpty().WithMessage("Username is required!"); ;
+        RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required!").EmailAddress().WithMessage("Email is not in correct form!"); 
+        RuleFor(x => x.UserName).NotEmpty().WithMessage("Username is required!"); 
         RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Phone number is required!");
         RuleFor(model => model.Password)
            .NotEmpty().WithMessage("Password is required!")

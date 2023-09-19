@@ -2,6 +2,7 @@
 using ClothesStrore.Application.Gender.GetGenders;
 using ClothesStrore.Application.Gender.InsertGender;
 using ClothesStrore.Application.Genders.DeleteGender;
+using ClothesStrore.Application.Genders.GetById;
 using ClothesStrore.Application.Genders.UpdateGender;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace ClothesStore.API.Controllers;
 
 [Route("api/gender")]
 [ApiController]
-[Authorize(Roles = "Admin")]
+//[Authorize(Roles = "Admin")]
 public class GenderController : ApiControllerBase
 {
     [HttpGet("get-genders")]
@@ -48,5 +49,12 @@ public class GenderController : ApiControllerBase
     {
         var result = await Mediator.Send(request);
         return Ok(Deserialize.JsonDeserialize(result));
+    }
+
+    [HttpGet("get-gender-by-id")]
+    public async Task<ActionResult> GetGenderById([FromQuery] GetGenderByIdRequest request)
+    {
+        var result = await Mediator.Send(request);
+        return Ok(result);
     }
 }

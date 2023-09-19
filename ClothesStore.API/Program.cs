@@ -14,6 +14,14 @@ builder.Services.AddLogging(builder =>
     builder.AddDebug();
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(new string[] { "totalAmountOfRecores" });
+    });
+});
+
 builder.Services.ConfigurationApplication(builder.Configuration);
 builder.Services.ConfigurationInfrastructure(builder.Configuration);
 
@@ -28,7 +36,6 @@ builder.Services.AddSwaggerGen();
 
 
 
-
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 //builder.Services.AddControllers().AddNewtonsoftJson();
 var app = builder.Build();
@@ -39,6 +46,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors();
 
 app.UseHttpsRedirection();
 

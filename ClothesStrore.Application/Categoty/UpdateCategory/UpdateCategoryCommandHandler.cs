@@ -1,5 +1,6 @@
 ﻿using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClothesStrore.Application.Categoty.UpdateCategory
 {
@@ -15,6 +16,9 @@ namespace ClothesStrore.Application.Categoty.UpdateCategory
 
         public async Task<string> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
+            var isTaken = await _context.Categories.AnyAsync(x => x.CategoryName == request.UpdateData.Name);
+            if (isTaken)
+                throw new DuplicateEntryException("This category name is already exist!");
             var existingCategory = await _context.Categories.FindAsync(request.CategoryId);
             if (existingCategory == null)
                 throw new NotFoundException("Category not found.");

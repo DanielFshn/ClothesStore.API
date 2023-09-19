@@ -54,6 +54,10 @@ namespace ClothesStore.API.Middlewares
                         context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         GetBody(out problem, HttpStatusCode.BadRequest, "Server Error", "Bad Request", ex.Message.ToString());
                         break;
+                    case DuplicateEntryException duplicateEntryException:
+                        context.Response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
+                        GetBody(out problem, HttpStatusCode.UnprocessableEntity, "Server Error", "Dublicate Entity", ex.Message.ToString());
+                        break;
                     default:
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         GetBody(out problem, HttpStatusCode.InternalServerError, "Server Error", "An internal server error has occured", ex.Message.ToString());

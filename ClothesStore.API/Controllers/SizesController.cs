@@ -1,5 +1,7 @@
 ﻿using ClothesStore.API.Common;
+using ClothesStrore.Application.Genders.GetById;
 using ClothesStrore.Application.Sizes.DeleteSize;
+using ClothesStrore.Application.Sizes.GetSizeById;
 using ClothesStrore.Application.Sizes.GetSizes;
 using ClothesStrore.Application.Sizes.InsertSizes;
 using ClothesStrore.Application.Sizes.UpdateSize;
@@ -45,4 +47,11 @@ public class SizesController : ApiControllerBase
         var result = await Mediator.Send(request);
         return Ok(Deserialize.JsonDeserialize(result));
     }
+    [HttpGet("get-size-by-id")]
+    public async Task<ActionResult> GetSizeById([FromQuery] GetSizeByIdRequest request)
+    {
+        var result = await Mediator.Send(request);
+        return Ok(result);
+    }
+
 }

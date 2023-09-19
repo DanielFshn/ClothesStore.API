@@ -1,5 +1,6 @@
 ﻿using ClothesStrore.Application.Common.Exceptions;
 using ClothesStrore.Application.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClothesStrore.Application.Genders.UpdateGender;
 
@@ -16,6 +17,9 @@ public class UpdateGenderCommandHandler : IRequestHandler<UpdateGenderCommand, s
 
     public async Task<string> Handle(UpdateGenderCommand request, CancellationToken cancellationToken)
     {
+        var isTaken = await _context.Genders.AnyAsync(x => x.GenderName == request.UpdateRequest.Name);
+        if (isTaken)
+            throw new DuplicateEntryException("This gender name is already exist!");
         var existingGender = await _context.Genders.FindAsync(request.Id);
         if (existingGender == null)
             throw new NotFoundException("Gender not found.");
