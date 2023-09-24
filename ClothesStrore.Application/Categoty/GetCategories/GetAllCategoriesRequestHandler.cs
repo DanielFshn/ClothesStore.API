@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClothesStrore.Application.Categoty.GetCategories
 {
-    public class GetAllCategoriesRequestHandler : IRequestHandler<GetAllCategoriesRequest, List<GetAllCategoriesResponse>>
+    public class GetAllCategoriesRequestHandler : IRequestHandler<GetAllCategoriesRequest, GetAllCategoriesResponse>
     {
         public IMapper _mapper { get; }
         public IMyDbContext _context { get; }
@@ -17,17 +17,26 @@ namespace ClothesStrore.Application.Categoty.GetCategories
 
 
 
-        public async Task<List<GetAllCategoriesResponse>> Handle(GetAllCategoriesRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllCategoriesResponse> Handle(GetAllCategoriesRequest request, CancellationToken cancellationToken)
         {
             //var categories = await _context.Categories.Where(c => c.DeletedOn == null).ToListAsync(cancellationToken);
             //var response = _mapper.Map<List<GetAllCategoriesResponse>>(categories);
             //return response;
             var query = _context.Categories.Where(x => x.DeletedOn == null).OrderBy(x => x.CategoryName).AsQueryable();
             //if (request.pagination.Page > 0 && request.pagination.RecordsPerPage > 0)
+            var totalRecords = await query.CountAsync();
+            //if (request.pagination.Page > 0 && request.pagination.RecordsPerPage > 0)
+            //{
                 query = query.Paginate(request.pagination);
+            //}
             var categories = await query.ToListAsync(cancellationToken);
-            return _mapper.Map<List<GetAllCategoriesResponse>>(categories);
 
+            var response = new GetAllCategoriesResponse
+            {
+                Data = _mapper.Map<List<Data>>(categories),
+                TotalRecords = totalRecords
+            };
+            return response;
         }
     }
 }

@@ -7,9 +7,13 @@ namespace ClothesStrore.Application.Categoty.GetCategories
     {
         public GetAllCategoriesMapper()
         {
-            CreateMap<Category, GetAllCategoriesResponse>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName))
-;
+            CreateMap<Category, Data>()
+           .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+           .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName));
+            
+            CreateMap<List<Category>, GetAllCategoriesResponse>()
+            .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src));
+
         }
     }
 }

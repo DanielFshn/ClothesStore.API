@@ -13,9 +13,9 @@ namespace ClothesStore.API.Controllers;
 public class ProductController : ApiControllerBase
 {
     [HttpGet("get-all-products")]
-    public async Task<ActionResult> GetAllProducts()
+    public async Task<ActionResult> GetAllProducts([FromQuery] GetAllProductsRequest request)
     {
-        var result = await Mediator.Send(new GetAllProductsRequest());
+        var result = await Mediator.Send(request);
         return Ok(result);
     }
     [HttpPost("create-product")]

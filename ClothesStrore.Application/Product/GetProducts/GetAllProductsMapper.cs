@@ -11,6 +11,7 @@ public class GetAllProductsMapper : Profile
             .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
             .ForMember(dest => dest.CategoryName, opt => opt.Ignore())
             .ForMember(dest => dest.GenderName, opt => opt.Ignore())
-            .ForMember(dest => dest.SizeName, opt => opt.Ignore());
+            .ForMember(dest => dest.SizeName, opt => opt.Ignore())
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
     }
 }

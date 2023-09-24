@@ -19,15 +19,21 @@ public class CreateProductRaringCommandHandler : IRequestHandler<CreateProductRa
 
     public async Task<string> Handle(CreateProductRatingRequest request, CancellationToken cancellationToken)
     {
-        if (await _context.Products.AnyAsync(x => x.Id != request.ProductId)
-                        || _userManager.FindByIdAsync(request.UserId) == null)
+        if (await _context.Products.AnyAsync(x => x.Id == request.ProductId))
         {
-            throw new NotFoundException("There is no product or user with the specified criteria.");
+            var user = await _userManager.FindByIdAsync(request.UserId);
+            if (user == null)
+                throw new NotFoundException("There is no product or user with the specified criteria.");
+            else
+            {
+                var productRating = _mapper.Map<ProductRating>(request);
+                _context.ProductRatings.Add(productRating);
+                await _context.SaveToDbAsync();
+                return JsonConvert.SerializeObject(new { Message = "Product rating is added succesfully" });
+            }
 
         }
-        var productRating = _mapper.Map<ProductRating>(request);
-        _context.ProductRatings.Add(productRating);
-        await _context.SaveToDbAsync();
-        return JsonConvert.SerializeObject(new { Message = "Product rating is added succesfully" });
+        return JsonConvert.SerializeObject(new { Message = "Error accured!" });
+
     }
 }
