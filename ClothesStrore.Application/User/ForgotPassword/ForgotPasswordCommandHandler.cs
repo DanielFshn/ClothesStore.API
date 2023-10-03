@@ -21,7 +21,7 @@ public class ForgotPasswordCommandHandler : IRequestHandler<EmailSendRequest, st
         {
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             //duket te formohet url ne baze te front end
-            var resetLink = $"https://yourwebsite.com/reset-password?email={user.Email}&token={token}";
+            var resetLink = $"http://localhost:3000/resetPassword?email={user.Email}&token={token}";
             var emailResponse = _mapper.Map<EmailSendResponse>(request);
             emailResponse.Body = "<p>Click here to reset your password</p>";
             emailResponse.Subject = resetLink;

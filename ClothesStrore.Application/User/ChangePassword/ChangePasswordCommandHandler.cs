@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ClothesStrore.Application.Common.Exceptions;
+using Newtonsoft.Json;
 
 namespace ClothesStrore.Application.User.ChangePassword
 {
@@ -21,6 +22,10 @@ namespace ClothesStrore.Application.User.ChangePassword
 
             var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
             bool succeeded = result.Succeeded;
+            if (succeeded == false) {
+                List<IdentityError> errorList = result.Errors.ToList();
+                throw new ConflictException(string.Join(", ", errorList.Select(e => e.Description)));
+            }
             return JsonConvert.SerializeObject(new { Message = succeeded });
         }
     }
