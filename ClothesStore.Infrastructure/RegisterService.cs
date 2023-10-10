@@ -1,5 +1,7 @@
 ﻿using ClothesStore.Infrastructure.DatabaseContext;
+using ClothesStore.Infrastructure.Products;
 using ClothesStrore.Application.Context;
+using ClothesStrore.Application.Product;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +20,7 @@ namespace ClothesStore.Infrastructure
     {
         public static void ConfigurationInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<IProductService, ProductService>();
 
             services.AddIdentity<Microsoft.AspNetCore.Identity.IdentityUser, Microsoft.AspNetCore.Identity.IdentityRole>()
                 .AddEntityFrameworkStores<ClothesStoreDbContext>()

@@ -1,4 +1,5 @@
 ﻿using ClothesStrore.Application.Product.DeleteProduct;
+using ClothesStrore.Application.Product.GetById;
 using ClothesStrore.Application.Product.GetProducts;
 using ClothesStrore.Application.Product.InsertProduct;
 using ClothesStrore.Application.Product.UnDeleteProduct;
@@ -47,4 +48,7 @@ public class ProductController : ApiControllerBase
         var result = await Mediator.Send(updateCommand);
         return Ok(result);
     }
+    [HttpGet("get-by-id")]
+    public async Task<ActionResult> GetProductById(Guid id, CancellationToken cancellationToken) =>
+        Ok(await Mediator.Send(new GetProductByIdRequest(id), cancellationToken));
 }

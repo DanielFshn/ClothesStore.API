@@ -1,5 +1,6 @@
 ﻿using ClothesStrore.Application.Behaviors;
 using ClothesStrore.Application.Common.Email;
+using ClothesStrore.Application.Product;
 using ClothesStrore.Application.User.Token;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
