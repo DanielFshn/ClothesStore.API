@@ -1,18 +1,28 @@
-﻿using ClothesStore.Infrastructure.DatabaseContext;
+﻿using ClothesStore.Infrastructure.Auth.Jwt;
+using ClothesStore.Infrastructure.Auth.Users;
+using ClothesStore.Infrastructure.Categories;
+using ClothesStore.Infrastructure.DatabaseContext;
+using ClothesStore.Infrastructure.Files;
+using ClothesStore.Infrastructure.Genders;
+using ClothesStore.Infrastructure.ProductRatings;
 using ClothesStore.Infrastructure.Products;
+using ClothesStore.Infrastructure.Sizes;
+using ClothesStrore.Application.Categoty;
 using ClothesStrore.Application.Context;
+using ClothesStrore.Application.Genders;
 using ClothesStrore.Application.Product;
+using ClothesStrore.Application.ProductsRating;
+using ClothesStrore.Application.Sizes;
+using ClothesStrore.Application.UploadFile;
+using ClothesStrore.Application.User;
+using ClothesStrore.Application.User.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ClothesStore.Infrastructure
 {
@@ -21,6 +31,15 @@ namespace ClothesStore.Infrastructure
         public static void ConfigurationInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IGenderService, GenderService>();
+            services.AddScoped<ISizeService, SizeService>();
+            services.AddScoped<IProductRating, ProductRatingService>();
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IUserService, UserService>();
+
+
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
             services.AddIdentity<Microsoft.AspNetCore.Identity.IdentityUser, Microsoft.AspNetCore.Identity.IdentityRole>()
                 .AddEntityFrameworkStores<ClothesStoreDbContext>()

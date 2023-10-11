@@ -1,26 +1,15 @@
-﻿using AutoMapper.QueryableExtensions;
-using ClothesStrore.Application.Context;
-using Microsoft.EntityFrameworkCore;
-
-namespace ClothesStrore.Application.User.GetAllUsers
+﻿namespace ClothesStrore.Application.User.GetAllUsers
 {
     public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersRequest, List<GetAllUsersResponse>>
     {
-        public IMapper _mapper { get; }
-        public IMyDbContext _context { get; }
-        public UserManager<IdentityUser> _userManager { get; }
+        private readonly IUserService _service;
 
-        public GetAllUsersQueryHandler(IMapper mapper, IMyDbContext context, UserManager<IdentityUser> userManager)
-        {
-            _mapper = mapper;
-            _context = context;
-            _userManager = userManager;
-        }
+        public GetAllUsersQueryHandler(IUserService service) =>
+            _service = service;
 
 
-        public Task<List<GetAllUsersResponse>> Handle(GetAllUsersRequest request, CancellationToken cancellationToken)
-        {
-            return _userManager.Users.ProjectTo<GetAllUsersResponse>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
-        }
+        public async Task<List<GetAllUsersResponse>> Handle(GetAllUsersRequest request, CancellationToken cancellationToken) =>
+            await _service.GetUsersAsync(request, cancellationToken);
+        
     }
 }

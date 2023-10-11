@@ -2,5 +2,5 @@
 
 public interface IJwtTokenGenerator
 {
-    Task<string> GenerateToken(IdentityUser user);
+    Task<string> GenerateTokenAsync(IdentityUser user);
 }

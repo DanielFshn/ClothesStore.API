@@ -1,36 +1,13 @@
-﻿using ClothesStore.Domain.Entities;
-using ClothesStrore.Application.Common.Exceptions;
-using ClothesStrore.Application.Context;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ClothesStrore.Application.Genders.DeleteGender
+﻿namespace ClothesStrore.Application.Genders.DeleteGender
 {
     public class DeleteGenderCommandHandler : IRequestHandler<DeleteGenderRequest, string>
     {
-        public IMapper _mapper { get; }
-        public IMyDbContext _context { get; }
+        public IGenderService _service { get; }
+        public DeleteGenderCommandHandler(IGenderService service) =>
+            _service = service;
+        
 
-        public DeleteGenderCommandHandler(IMapper mapper, IMyDbContext context)
-        {
-            _mapper = mapper;
-            _context = context;
-        }
-
-        public async Task<string> Handle(DeleteGenderRequest request, CancellationToken cancellationToken)
-        {
-            var gender = await _context.Genders.FindAsync(request.GednerId);
-            if (gender == null)
-                throw new NotFoundException("Gender not found.");
-            _mapper.Map(request, gender);
-            gender.DeletedOn = DateTime.Now;
-            await _context.SaveToDbAsync();
-            return JsonConvert.SerializeObject(new { Message = "Gender is deleted succesfully" });
-
-        }
+        public async Task<string> Handle(DeleteGenderRequest request, CancellationToken cancellationToken) =>
+            await _service.DeleteGenderAsync(request, cancellationToken);
     }
 }

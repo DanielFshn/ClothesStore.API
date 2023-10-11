@@ -1,7 +1,4 @@
-﻿
-
-using ClothesStore.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ClothesStrore.Application.Context
 {

@@ -6,20 +6,12 @@ namespace ClothesStrore.Application.Genders.GetGenders
 {
     public class GetAllGendersCommandHandler : IRequestHandler<GetAllGendersRequest, List<GetAllGenderResponse>>
     {
-        private IMapper _mapper { get; }
-        private IMyDbContext _context { get; }
+        private readonly IGenderService _service;
 
-        public GetAllGendersCommandHandler(IMapper mapper, IMyDbContext context)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
+        public GetAllGendersCommandHandler(IGenderService service) =>
+                        _service = service;
+        public async Task<List<GetAllGenderResponse>> Handle(GetAllGendersRequest request, CancellationToken cancellationToken) =>
+            await _service.GetGendersAsync(request, cancellationToken);
 
-        public async Task<List<GetAllGenderResponse>> Handle(GetAllGendersRequest request, CancellationToken cancellationToken)
-        {
-            var genders = await _context.Genders.Where(x => x.DeletedOn == null).ToListAsync(cancellationToken);
-            var response = _mapper.Map<List<GetAllGenderResponse>>(genders);
-            return response;
-        }
     }
 }

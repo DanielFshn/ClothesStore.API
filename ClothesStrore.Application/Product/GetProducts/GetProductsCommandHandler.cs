@@ -14,6 +14,6 @@ public class GetProductsCommandHandler : IRequestHandler<GetAllProductsRequest, 
 
 
     public async Task<List<GetAllProductsResponse>> Handle(GetAllProductsRequest request, CancellationToken cancellationToken) =>
-        await _service.GetProducts(request, cancellationToken);
+        await _service.GetProductsAsync(request, cancellationToken);
     
 }

@@ -1,7 +1,5 @@
 ﻿using ClothesStrore.Application.Behaviors;
 using ClothesStrore.Application.Common.Email;
-using ClothesStrore.Application.Product;
-using ClothesStrore.Application.User.Token;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +15,6 @@ public static class RegisterService
         services.AddMediatR(_ => _.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
         services.AddScoped<IEmailService, EmailService>();
