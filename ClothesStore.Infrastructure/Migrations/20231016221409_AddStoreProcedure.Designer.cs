@@ -4,6 +4,7 @@ using ClothesStore.Infrastructure.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClothesStore.Infrastructure.Migrations
 {
     [DbContext(typeof(ClothesStoreDbContext))]
-    partial class ClothesStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231016221409_AddStoreProcedure")]
+    partial class AddStoreProcedure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -326,7 +329,7 @@ namespace ClothesStore.Infrastructure.Migrations
 
             modelBuilder.Entity("ClothesStrore.Application.Orders.GetOrders.GetOrderByUserId.GetOrdersByIdResponse", b =>
                 {
-                    b.Property<string>("Address")
+                    b.Property<string>("Adress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -346,46 +349,6 @@ namespace ClothesStore.Infrastructure.Migrations
                     b.ToTable((string)null);
 
                     b.ToView("GetOrdersByUserId", (string)null);
-                });
-
-            modelBuilder.Entity("ClothesStrore.Application.Product.GetProducts.GetAllProductsResponse", b =>
-                {
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GenderName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("RatingNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SizeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("GetFilteredProducts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -1,5 +1,7 @@
 ﻿using ClothesStore.Domain.Entities;
 using ClothesStrore.Application.Context;
+using ClothesStrore.Application.Orders.GetOrders.GetOrderByUserId;
+using ClothesStrore.Application.Product.GetProducts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,8 @@ namespace ClothesStore.Infrastructure.DatabaseContext
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductRating> ProductRatings { get; set; }
         public DbSet<Size> Sizes { get; set; }
+        public DbSet<GetOrdersByIdResponse> GetOrdersByIdResponses { get; set; }
+        public DbSet<GetAllProductsResponse> GetAllProductsResponses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -56,6 +60,8 @@ namespace ClothesStore.Infrastructure.DatabaseContext
                 .WithMany()
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<GetOrdersByIdResponse>().HasNoKey().ToView("GetOrdersByUserId");
+            builder.Entity<GetAllProductsResponse>().HasNoKey().ToView("GetFilteredProducts");
         }
         public async Task<int> SaveToDbAsync()
         {

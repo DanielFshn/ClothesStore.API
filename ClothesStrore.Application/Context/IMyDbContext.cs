@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ClothesStrore.Application.Orders.GetOrders.GetOrderByUserId;
+using ClothesStrore.Application.Product.GetProducts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClothesStrore.Application.Context
 {
@@ -14,5 +16,8 @@ namespace ClothesStrore.Application.Context
         public DbSet<ClothesStore.Domain.Entities.Product> Products { get; set; }
         public DbSet<ProductRating> ProductRatings { get; set; }
         public DbSet<Size> Sizes { get; set; }
+        public DbSet<GetOrdersByIdResponse> GetOrdersByIdResponses { get; set; }
+        public DbSet<GetAllProductsResponse> GetAllProductsResponses { get; set; }
+
     }
 }

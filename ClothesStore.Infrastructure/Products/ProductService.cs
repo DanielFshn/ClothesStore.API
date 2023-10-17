@@ -6,6 +6,7 @@ using ClothesStrore.Application.Product.GetById;
 using ClothesStrore.Application.Product.GetProducts;
 using ClothesStrore.Application.Product.InsertProduct;
 using ClothesStrore.Application.Product.UpdateProdduct;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -61,43 +62,20 @@ namespace ClothesStore.Infrastructure.Products
 
         public async Task<List<GetAllProductsResponse>> GetProductsAsync(GetAllProductsRequest request, CancellationToken cancellationToken)
         {
-            var query = (from p in _context.Products
-                         join c in _context.Categories on p.CategoryId equals c.Id
-                         join s in _context.Sizes on p.SizeId equals s.Id
-                         join g in _context.Genders on p.GenderId equals g.Id
-                         where p.IsRelease && c.DeletedOn == null && s.DeletedOn == null && g.DeletedOn == null
-                         select new GetAllProductsResponse
-                         {
-                             CategoryName = c.CategoryName,
-                             Description = p.Description,
-                             Id = p.Id,
-                             GenderName = g.GenderName,
-                             ImageUrl = p.ImageUrl,
-                             Name = p.Name,
-                             SizeName = s.Name,
-                             Price = p.Price,
-                             RatingNumber = !string.IsNullOrEmpty(request.UserId) ? (from pr in _context.ProductRatings
-                                                                                     where pr.ProductId == p.Id && pr.UserId == request.UserId
-                                                                                     select (int?)pr.RatingNumber)
-                                        .FirstOrDefault() ?? 0 : 0,
-                         });
-            if (!string.IsNullOrEmpty(request.Id))
-                query = query.Where(p => p.Id == request.Id);
-            else
-            {
-                if (!string.IsNullOrEmpty(request.Category))
-                    query = query.Where(p => p.CategoryName == request.Category);
-                if (!string.IsNullOrEmpty(request.Size))
-                    query = query.Where(p => p.SizeName == request.Size);
-                if (!string.IsNullOrEmpty(request.Gender))
-                    query = query.Where(p => p.GenderName == request.Gender);
-            }
+            var userIdParameter = new SqlParameter("@UserId", request.UserId as object ?? DBNull.Value);
+            var idParameter = new SqlParameter("@Id", request.Id as object ?? DBNull.Value);
+            var categoryParameter = new SqlParameter("@Category", request.Category as object ?? DBNull.Value);
+            var sizeParameter = new SqlParameter("@Size", request.Size as object ?? DBNull.Value);
+            var genderParameter = new SqlParameter("@Gender", request.Gender as object ?? DBNull.Value);
+
+            var query = _context.GetAllProductsResponses.FromSqlRaw("EXEC GetFilteredProducts @UserId, @Id, @Category, @Size, @Gender",
+                userIdParameter, idParameter, categoryParameter, sizeParameter, genderParameter);
             return await query.ToListAsync();
         }
 
         public async Task<string> UpdateProductAsync(UpdateProductCommand command, CancellationToken cancellationToken)
         {
-           
+
             var existingProduct = await _context.Products.FindAsync(command.Id);
             if (existingProduct == null)
                 throw new NotFoundException("Product not found.");

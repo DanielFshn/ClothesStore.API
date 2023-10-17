@@ -4,15 +4,19 @@ using ClothesStore.Infrastructure.Categories;
 using ClothesStore.Infrastructure.DatabaseContext;
 using ClothesStore.Infrastructure.Files;
 using ClothesStore.Infrastructure.Genders;
+using ClothesStore.Infrastructure.Orders;
 using ClothesStore.Infrastructure.ProductRatings;
 using ClothesStore.Infrastructure.Products;
 using ClothesStore.Infrastructure.Sizes;
+using ClothesStore.Infrastructure.Stripe;
 using ClothesStrore.Application.Categoty;
 using ClothesStrore.Application.Context;
 using ClothesStrore.Application.Genders;
+using ClothesStrore.Application.Orders;
 using ClothesStrore.Application.Product;
 using ClothesStrore.Application.ProductsRating;
 using ClothesStrore.Application.Sizes;
+using ClothesStrore.Application.Stripe;
 using ClothesStrore.Application.UploadFile;
 using ClothesStrore.Application.User;
 using ClothesStrore.Application.User.Token;
@@ -37,6 +41,8 @@ namespace ClothesStore.Infrastructure
             services.AddScoped<IProductRating, ProductRatingService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IOrderService, OrderService>();
 
 
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
