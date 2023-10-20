@@ -1,5 +1,5 @@
-﻿using ClothesStore.API.Common;
-using ClothesStrore.Application.Stripe.AddStripe;
+﻿using ClothesStrore.Application.Stripe.AddStripe;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
 
@@ -15,6 +15,7 @@ namespace ClothesStore.API.Controllers
             _configuration = configuration;
 
         [HttpPost("create-payment-intent")]
+        [Authorize(Roles = "Admin,User")]
         public async Task<ActionResult> CreatePaymentIntent([FromBody] PaymentIntentRequest request)
         {
             var amount = request.Amount;

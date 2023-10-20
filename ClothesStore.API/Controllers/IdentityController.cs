@@ -26,7 +26,7 @@ public class IdentityController : ApiControllerBase
         else
             return BadRequest();
     }
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpGet("get-all-users")]
     public async Task<ActionResult> GetAllUsers()
     {
@@ -34,12 +34,14 @@ public class IdentityController : ApiControllerBase
         return Ok(response);
     }
     [HttpPost("login-user")]
+    [AllowAnonymous]
     public async Task<ActionResult> Login([FromBody] LoginUserRequest paylaod)
     {
         var response = await Mediator.Send(paylaod);
         return Ok(response);
     }
     [HttpPost("change-password")]
+    [AllowAnonymous]
     public async Task<ActionResult> ChangePassword(string id, [FromBody] ChangePasswordRequest model)
     {
         var command = new ChangePasswordRequest
@@ -59,12 +61,14 @@ public class IdentityController : ApiControllerBase
             return BadRequest(jsonObject);
     }
     [HttpPost("forgot-password")]
+    [AllowAnonymous]
     public async Task<ActionResult> ForgotPassword([FromBody] EmailSendRequest request)
     {
         var result = await Mediator.Send(request);
         return Ok(result);
     }
     [HttpPost("reset-password")]
+    [AllowAnonymous]
     public async Task<ActionResult> ResetPasswordWithToken([FromBody] ResetPasswordRequest payload)
     {
         var result = await Mediator.Send(payload);

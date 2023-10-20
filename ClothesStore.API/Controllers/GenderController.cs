@@ -15,12 +15,14 @@ namespace ClothesStore.API.Controllers;
 public class GenderController : ApiControllerBase
 {
     [HttpGet("get-genders")]
+    [AllowAnonymous]
     public async Task<ActionResult> GetAllGenders()
     {
         var response = await Mediator.Send(new GetAllGendersRequest());
         return Ok(response);
     }
     [HttpPost("insert-gender")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> CreateGender([FromBody] CreateGenderRequest payload)
     {
         var result = await Mediator.Send(payload);
@@ -32,6 +34,7 @@ public class GenderController : ApiControllerBase
             return BadRequest();
     }
     [HttpPut("update-gender/{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> UpdateGender(string id, [FromBody] UpdateGenderRequest request)
     {
         var updateCommand = new UpdateGenderCommand
@@ -45,6 +48,7 @@ public class GenderController : ApiControllerBase
         return Ok(Deserialize.JsonDeserialize(result));
     }
     [HttpPut("delete-gender")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeleteGender([FromQuery] DeleteGenderRequest request)
     {
         var result = await Mediator.Send(request);
@@ -52,6 +56,7 @@ public class GenderController : ApiControllerBase
     }
 
     [HttpGet("get-gender-by-id")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> GetGenderById([FromQuery] GetGenderByIdRequest request)
     {
         var result = await Mediator.Send(request);

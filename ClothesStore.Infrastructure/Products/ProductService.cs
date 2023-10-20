@@ -20,10 +20,9 @@ namespace ClothesStore.Infrastructure.Products
         public ProductService(IMyDbContext context, IMapper mapper) =>
             (_mapper, _context) = (mapper, context);
 
-        public async Task<bool> CheckExistAsync<T>(string id, DbSet<T> dbSet) where T : class
-        {
-            return await dbSet.AnyAsync(x => EF.Property<string>(x, "Id") == id);
-        }
+        public async Task<bool> CheckExistAsync<T>(string id, DbSet<T> dbSet) where T : class =>
+            await dbSet.AnyAsync(x => EF.Property<string>(x, "Id") == id);
+        
 
         public async Task<string> CreateProductAsync(CreateProductRequest request, CancellationToken cancellationToken)
         {

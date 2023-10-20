@@ -16,12 +16,14 @@ namespace ClothesStore.API.Controllers;
 public class CategoriesController : ApiControllerBase
 {
     [HttpGet("get-categories")]
+    [AllowAnonymous]
     public async Task<ActionResult> GetAllCategories([FromQuery] PaginationDTO pagination)
     {
-        var response = await Mediator.Send(new GetAllCategoriesRequest() { pagination = pagination});
+        var response = await Mediator.Send(new GetAllCategoriesRequest() { pagination = pagination });
         return Ok(response);
     }
     [HttpPost("insert-category")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> InsertCategory([FromBody] CreateCategoryRequest payload)
     {
         var result = await Mediator.Send(payload);
@@ -33,6 +35,7 @@ public class CategoriesController : ApiControllerBase
             return BadRequest();
     }
     [HttpPut("update-category/{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> UpdateProduct(string id, [FromBody] UpdateCategoryRequest request)
     {
         var updateCommand = new UpdateCategoryCommand
@@ -46,12 +49,14 @@ public class CategoriesController : ApiControllerBase
         return Ok(Deserialize.JsonDeserialize(result));
     }
     [HttpPut("delete-category")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeleteCategory([FromQuery] DeleteCategoryRequest request)
     {
         var result = await Mediator.Send(request);
         return Ok(Deserialize.JsonDeserialize(result));
     }
     [HttpGet("get-category-by-id")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> GetById([FromQuery] GetCategoryByIdRequest request)
     {
         var result = await Mediator.Send(request);

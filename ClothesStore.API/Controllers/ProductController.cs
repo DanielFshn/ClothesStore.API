@@ -4,6 +4,7 @@ using ClothesStrore.Application.Product.GetProducts;
 using ClothesStrore.Application.Product.InsertProduct;
 using ClothesStrore.Application.Product.UnDeleteProduct;
 using ClothesStrore.Application.Product.UpdateProdduct;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
 
@@ -14,30 +15,35 @@ namespace ClothesStore.API.Controllers;
 public class ProductController : ApiControllerBase
 {
     [HttpGet("get-all-products")]
+    [AllowAnonymous]
     public async Task<ActionResult> GetAllProducts([FromQuery] GetAllProductsRequest request)
     {
         var result = await Mediator.Send(request);
         return Ok(result);
     }
     [HttpPost("create-product")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> CreateProduct([FromBody] CreateProductRequest payload)
     {
         var result = await Mediator.Send(payload);
         return Ok(result);
     }
     [HttpPut("delete-product")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeleteProduct([FromQuery] DeleteProductRequest request)
     {
         var result = await Mediator.Send(request);
         return Ok(result);
     }
     [HttpPut("undelete-product")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> UnDeleteProduct([FromQuery] UnDeleteProductRequest request)
     {
         var result = await Mediator.Send(request);
         return Ok(result);
     }
     [HttpPut("update-product/{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> UpdateProduct(string id, [FromBody] UpdateProductDto request)
     {
         var updateCommand = new UpdateProductCommand()
@@ -49,6 +55,7 @@ public class ProductController : ApiControllerBase
         return Ok(result);
     }
     [HttpGet("get-by-id")]
+    [AllowAnonymous]    
     public async Task<ActionResult> GetProductById(Guid id, CancellationToken cancellationToken) =>
         Ok(await Mediator.Send(new GetProductByIdRequest(id), cancellationToken));
 }
