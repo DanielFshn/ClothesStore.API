@@ -15,7 +15,7 @@ public class OrderController : ApiControllerBase
     public async Task<ActionResult> CreateOrder([FromBody] AddOrderRequest request) =>
         Ok(await Mediator.Send(request));
     [HttpGet("orders")]
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "User")]
     public async Task<ActionResult> GetOrdersByUserId([FromQuery] GetOrdersByUserIdQuery request) =>
         Ok(await Mediator.Send(request));
     [HttpGet("statistics")]

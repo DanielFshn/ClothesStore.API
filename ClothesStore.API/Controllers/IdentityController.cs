@@ -4,6 +4,7 @@ using ClothesStrore.Application.User.CreaeteUser;
 using ClothesStrore.Application.User.ForgotPassword;
 using ClothesStrore.Application.User.GetAllUsers;
 using ClothesStrore.Application.User.LoginUser;
+using ClothesStrore.Application.User.RefreshToken;
 using ClothesStrore.Application.User.ResetPasswordWithToken;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -74,4 +75,11 @@ public class IdentityController : ApiControllerBase
         var result = await Mediator.Send(payload);
         return Ok(result);
     }
+    [HttpPost("refresh-token")]
+    [AllowAnonymous]
+    public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenCommand payload)
+    {
+        var result = await Mediator.Send(payload);
+        return Ok(result);
+    }   
 }
