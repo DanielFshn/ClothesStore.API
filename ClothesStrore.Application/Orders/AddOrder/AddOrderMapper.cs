@@ -11,7 +11,7 @@
             CreateMap<OrderDetails, OrderDetail>()
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Price))
-                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.QuantityUnit))
                 .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => DateTime.Now));
         }
     }

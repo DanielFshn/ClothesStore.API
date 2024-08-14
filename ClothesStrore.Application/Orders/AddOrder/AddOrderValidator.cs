@@ -23,6 +23,6 @@ public class OrderDetailsValidator : AbstractValidator<OrderDetails>
     {
         RuleFor(product => product.Id).NotEmpty().WithMessage("Product Id is required.");
         RuleFor(product => product.Price).GreaterThan(0).WithMessage("Price must be greater than 0.");
-        RuleFor(product => product.Quantity).GreaterThan(0).WithMessage("Quantity must be greater than 0.");
+        RuleFor(product => product.QuantityUnit).GreaterThan(0).WithMessage("Quantity unit must be greater than 0.");
     }
 }

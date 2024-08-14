@@ -51,8 +51,15 @@ namespace ClothesStore.Infrastructure.Orders
                     orderDetail.AdressId = adressId;
                     orderDetail.OrderId = orderId;
                     orderDetail.Id = Guid.NewGuid().ToString();
+                    var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == orderDetail.ProductId);
+                    if(product != null)
+                    {
+                        var requestedQuantity = Math.Min(orderDetail.Quantity, product.Quantity);
+                        product.Quantity -= requestedQuantity;
+                    }
                 }
                 _context.OrderDetails.AddRange(orderDetailEntities);
+              
                 await _context.SaveToDbAsync();
                 return JsonConvert.SerializeObject(new { Message = "Order saved succesfully." });
 

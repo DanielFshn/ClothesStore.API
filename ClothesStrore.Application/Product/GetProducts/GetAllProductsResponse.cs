@@ -12,5 +12,6 @@ public class GetAllProductsResponse
     public string GenderName {get; set; }
     public string SizeName {get; set; }
     public int RatingNumber { get; set; }
+    public int Quantity { get; set; }   
 
 }
